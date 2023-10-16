@@ -1,12 +1,15 @@
 package com.mathcode.todolist.task;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +41,10 @@ public class TaskController {
         }
         var task = this.taskRespository.save(taskModel);
         return ResponseEntity.ok().body(task);
+    }
+    @GetMapping("/")
+    public List<TaskModel> list (HttpServletRequest request) {
+        return this.taskRespository.findByIdUser((UUID)request.getAttribute("idUser"));
+        
     }
 }
